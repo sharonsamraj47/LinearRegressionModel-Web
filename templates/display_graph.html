@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display Graph</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column; /* change flex direction to column */
+            align-items: center; /* align items to the center horizontally */
+            justify-content: flex-start; /* align items to the top */
+            height: 100vh;
+        }
+
+        img {
+            max-width: 50%; /* reduce the size by an additional 15% */
+            height: auto;
+            display: block;
+            margin-top: 20px; /* move the image to the top */
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        form {
+            margin-top: 20px; /* add space between image and form */
+            display: flex;
+            flex-direction: column; /* arrange form elements vertically */
+            align-items: center; /* align form elements to the center horizontally */
+        }
+
+        label,
+        input,
+        button {
+            margin-bottom: 10px; /* add space between form elements */
+        }
+    </style>
+</head>
+<body>
+    <img src="{{ image_path }}" alt="Generated Graph">
+
+    <form action="/calculate_y" method="post">
+        <label for="user_x">Give the X value to display Y value:</label>
+        <input type="text" name="user_x" id="user_x" required>
+
+        <!-- Add hidden fields for the selected columns -->
+        <input type="hidden" name="column1" value="{{ request.form['column1'] }}">
+        <input type="hidden" name="column2" value="{{ request.form['column2'] }}">
+
+        <button type="submit">Calculate Y</button>
+    </form>
+
+    {% if result %}
+        <p>For {{ column1 }} value {{ user_x }}, the estimated {{ column2 }} value is {{ user_y }}.</p>
+    {% endif %}
+    
+</body>
+</html>
